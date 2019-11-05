@@ -5,20 +5,13 @@ import urllib.request
 import os   
 import time 
 import datetime
-#######
-##Description for the app
-#######
 from flask import render_template
 from flask import Flask, request, url_for, redirect, render_template
-
-from flask import Flask
 from flask_apscheduler import APScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 
-
-from listen.listen import Listener
+from listen.listen import Listener #my class
 listener=Listener()
-
 
 app = flask.Flask(__name__)
 scheduler = BackgroundScheduler()
