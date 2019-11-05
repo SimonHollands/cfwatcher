@@ -7,10 +7,7 @@ import pandas as pd
 import io
 import time
 
-#Something
 s3=s3pushpull()
-#df1=pd.DataFrame([{'a':1,'b':2}])
-#s3.pandas_to_s3(df=df1, bucket='surfcounter14367', key='S3:/testeroo.csv')
 
 class Listener:
 
@@ -37,4 +34,6 @@ if __name__ == "__main__":
     for i in range(100):
         listener.hit_model()
         print(f'''Smack, {listener.count} surfers right now.''')
-        time.sleep(60)
+        time.sleep(60*5)
+
+
