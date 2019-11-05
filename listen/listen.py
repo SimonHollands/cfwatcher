@@ -27,13 +27,13 @@ class Listener:
         print(self.data.head())
 
 
-if __name__ == "__main__":
-    listener=Listener()
-    print(listener.data.head())
+# if __name__ == "__main__":
+#     listener=Listener()
+#     print(listener.data.head())
 
-    for i in range(100):
-        listener.hit_model()
-        print(f'''Smack, {listener.count} surfers right now.''')
-        time.sleep(60*5)
+    # for i in range(100):
+    #     listener.hit_model()
+    #     print(f'''Smack, {listener.count} surfers right now.''')
+    #     time.sleep(60*5)
 
 

@@ -1,50 +1,48 @@
 import flask
 from flask import request, jsonify
 from flask import send_file
-from Surf_counter.model_server import ServeModel
 import urllib.request
 import os   
-from flask import Flask, session
-from flask_session.__init__ import Session
-
+import time 
+import datetime
 #######
 ##Description for the app
 #######
+from flask import render_template
+from flask import Flask, request, url_for, redirect, render_template
 
-app_model='yolo.h5'
+from flask import Flask
+from flask_apscheduler import APScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 
-model_links={'yolo-tiny.h5':'https://github.com/OlafenwaMoses/ImageAI/releases/download/1.0/yolo-tiny.h5',
-             'yolo.h5': 'https://github.com/OlafenwaMoses/ImageAI/releases/download/1.0/yolo.h5'}
 
-model_path = "./models/" + app_model 
+from listen.listen import Listener
+listener=Listener()
+
 
 app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+scheduler = BackgroundScheduler()
+crawl_count=0
 
-# SESSION_TYPE = 'redis'
-# app.config.from_object(__name__)
-# Session(app)
+def fetch_data_from_api():
+    '''
+     Do your job here
+    '''
+    print("Iam Fetching now")
+    listener.hit_model()
+    return redirect(url_for('home'))
 
-
-print("Read Model")
-urllib.request.urlretrieve(model_links[app_model], model_path)
-sv=ServeModel(app_model)
-
-@app.route('/model')
-def api_model():
-    '''Grab predictions from model server '''
-    print("Here  starting Api Model ! ")
-    count=sv.serveit()
-    return str(count)
-
-@app.route('/', methods=['GET'])
+@app.route('/')
 def home():
-    print("Here  at home ! ")
-
-    '''Home page'''
-    return '''<h1>Surfing a Deep Learning Model</h1>
-<p>A Yolo Model for detecting surfers.</p>'''
+    message=datetime.date.today().strftime("%B %d, %Y")
+    return render_template('index.html',message=message)
 
 if __name__ == '__main__':
+
+
+    #add your job here 
     #app.run(threaded=False,use_reloader=False, host="0.0.0.0", port=80)
+    scheduler.add_job(func=fetch_data_from_api, trigger="interval", seconds=30)
+    scheduler.start()
+
     app.run(threaded=False,use_reloader=False)
