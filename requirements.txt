@@ -1,0 +1,7 @@
+boto3
+pillow
+requests
+flask
+gunicorn
+pandas
+s3fs
