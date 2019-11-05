@@ -42,7 +42,5 @@ if __name__ == '__main__':
 
     #add your job here 
     #app.run(threaded=False,use_reloader=False, host="0.0.0.0", port=80)
-    scheduler.add_job(func=fetch_data_from_api, trigger="interval", seconds=60*8)
-    scheduler.start()
 
     app.run(threaded=False,use_reloader=False)
